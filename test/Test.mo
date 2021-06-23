@@ -1,33 +1,29 @@
 import M "mo:matchers/Matchers";
-import Library "../src/Library";
+import Library "../src";
 import S "mo:matchers/Suite";
 import T "mo:matchers/Testable";
 import Int "mo:base/Int";
 import Debug "mo:base/Debug";
-import Array "mo:base/Array";
+import Iter "mo:base/Iter";
 
+let arr = [3,5,4,2,6,4,1,9,7,8];
 let t = Library.Splay<Int>(Int.compare);
-t.fromArray([3,5,4,2,6,4,1,9,7,8]);
-assert(t.find(2) == true);
-assert(t.find(4) == true);
-assert(t.find(10) == false);
-assert(t.min() == ?1);
-t.remove(4);
-assert(t.find(4) == false);
-assert(t.find(9) == true);
-assert(t.min() == ?1);
-t.remove(1);
-assert(t.min() == ?2);
+t.fromArray(arr);
+for (x in arr.vals()) {
+    assert(t.find(x) == true);
+    t.remove(x);
+    assert(t.find(x) == false);
+    t.insert(x);
+    assert(t.find(x) == true);
+    assert(t.min() == ?1);
+};
+for (x in t.entries()) {
+    assert(t.find(x) == true);
+    t.remove(x);
+    if (x < 9) {
+        assert(t.min() == ?(x+1));
+    } else {
+        assert(t.min() == null);
+    }
+};
 
-/*
-let suite = S.suite("splay", [
-    S.test("find",
-           t.find(2),
-           M.equals(T.bool(true))),
-    S.test("christoph is not a palindrome",
-      Library.isPalindrome("christoph"),
-      M.equals(T.bool(false))),
-]);
-
-S.run(suite);
-*/

@@ -1,18 +1,28 @@
-/// A shiny new library
+/// Splay tree
 ///
-/// Make it easy and fun to use your new library by including some module specific documentation here.
-/// It's always a good idea to include a minimal working example:
+/// Based on Sam Westrick's SML implementation: https://github.com/shwestrick/pure-splay/blob/master/BottomUpSplay.sml
+/// Note for using this library in IC: Since lookup changes the shape of the splay tree, we cannot use query calls
+/// for anything that touches the splay tree.
 ///
 /// ```motoko
-/// import LibraryTemplate "mo:library-template/Library";
+/// import Splay "mo:splay";
 ///
-/// assert(LibraryTemplate.isPalindrome("anna"));
-/// assert(not LibraryTemplate.isPalindrome("christoph"));
+/// let t = Splay.Splay<Int>(Int.compare);
+/// t.fromArray([3,5,4,2,6,4,1,9,7,8]);
+/// for (x in arr.vals()) {
+///    assert(t.find(x) == true);
+///    t.remove(x);
+///    assert(t.find(x) == false);
+///    t.insert(x);
+///    assert(t.find(x) == true);
+///    assert(t.min() == ?1);
+/// };
 /// ```
-// Based on Sam Westrick's SML implementation: https://github.com/shwestrick/pure-splay/blob/master/BottomUpSplay.sml
+/// 
 
 import O "mo:base/Order";
 import List "mo:base/List";
+import I "mo:base/Iter";
 
 module {
     public type Tree<X> = {
@@ -71,6 +81,30 @@ module {
         case (#node(l,_,_)) { subtree_min(l) };
         };
     };
+    type IterRep<X> = List.List<{ #tr:Tree<X>; #x:X }>;
+    func iter<X>(t: Tree<X>) : I.Iter<X> {
+        object {
+            var trees: IterRep<X> = ?(#tr(t), null);
+            public func next() : ?X {
+                switch trees {
+                case null { null };
+                case (?(#tr(#empty), ts)) {
+                         trees := ts;
+                         next()
+                     };
+                case (?(#x(x), ts)) {
+                         trees := ts;
+                         ?x
+                     };
+                case (?(#tr(#node(l, x, r)), ts)) {
+                         trees := ?(#tr(l), ?(#x(x), ?(#tr(r), ts)));
+                         next()
+                     };
+                };
+            }
+        }
+    };
+    
     public class Splay<X>(compareTo: (X,X) -> O.Order) {
         var tree : Tree<X> = #empty;
         public func insert(k: X) {
@@ -134,6 +168,7 @@ module {
                 insert(x);
             }
         };
+        public func entries() : I.Iter<X> { iter(tree) };
     };
 }
 
