@@ -1,6 +1,7 @@
 /// Splay tree
 ///
 /// Based on Sam Westrick's SML implementation: https://github.com/shwestrick/pure-splay/blob/master/BottomUpSplay.sml
+///
 /// Note for using this library in IC: Since lookup changes the shape of the splay tree, we cannot use query calls
 /// for anything that touches the splay tree.
 ///

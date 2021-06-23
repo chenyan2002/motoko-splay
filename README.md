@@ -55,7 +55,7 @@ whenever you push a git tag, follow these steps. Otherwise delete
 
 ## API Documentation
 
-API documentation for this library can be found at (CHANGE ME) https://kritzcreek.github.io/motoko-library-template
+API documentation for this library can be found at https://chenyan2002.github.io/motoko-splay/lib.html
 
 ## License
 
