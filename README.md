@@ -1,16 +1,4 @@
-# motoko-library-template
-
-A template for making a Motoko Library.
-
-Make sure to set the "Include all branches" checkbox in the creation
-dialog. After you've created a copy follow the Checklist section in
-the README.
-
-## Features
-
-- Build & Test development workflow
-- CI Setup
-- Automatic Documentation generation for GitHub Pages
+# Motoko Splay Tree Library
 
 ## How to develop
 

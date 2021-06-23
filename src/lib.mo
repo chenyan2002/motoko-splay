@@ -30,7 +30,8 @@ module {
         #empty;
     };
     type Context<X> = { #right: (Tree<X>, X); #left: (X, Tree<X>) };
-    type Path<X> = (Tree<X>, List.List<Context<X>>);
+    type Zipper<X> = List.List<Context<X>>;
+    type Path<X> = (Tree<X>, Zipper<X>);
 
     func path<X>(compareTo: (X,X) -> O.Order, k: X, (t, anc): Path<X>) : Path<X> {
         switch t {
@@ -44,7 +45,7 @@ module {
              };
         };
     };
-    func splay_<X>(compareTo: (X,X) -> O.Order, A: Tree<X>, B: Tree<X>, anc: List.List<Context<X>>) : (Tree<X>, Tree<X>) {
+    func splay_<X>(compareTo: (X,X) -> O.Order, A: Tree<X>, B: Tree<X>, anc: Zipper<X>) : (Tree<X>, Tree<X>) {
         switch anc {
         case (null) { (A, B) };
         case (?(#left(p, C), null)) { (A, #node(B,p,C)) }; // zig
@@ -63,7 +64,7 @@ module {
              };
         };
     };
-    func splay<X>(compareTo: (X,X) -> O.Order, l: Tree<X>, x: X, r: Tree<X>, anc: List.List<Context<X>>) : Tree<X> {
+    func splay<X>(compareTo: (X,X) -> O.Order, l: Tree<X>, x: X, r: Tree<X>, anc: Zipper<X>) : Tree<X> {
         let (l_,r_) = splay_(compareTo, l, r, anc);
         #node(l_,x,r_)
     };
