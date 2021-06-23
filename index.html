@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html><head title="Motoko docs"><meta charset="UTF-8"/><link href="styles.css" rel="stylesheet"/></head><div class="index-container"><h1 class="index-header">Index of modules</h1><ul class="index-listing"><li class="index-item"><a class="index-item-link" href="lib.html">lib</a><div class="index-item-comment"><p>Splay tree</p>
+<p>Based on Sam Westrick's SML implementation: https://github.com/shwestrick/pure-splay/blob/master/BottomUpSplay.sml
+Note for using this library in IC: Since lookup changes the shape of the splay tree, we cannot use query calls
+for anything that touches the splay tree.</p>
+<pre class="motoko"><code class="motoko">import Splay &quot;mo:splay&quot;;
+
+let t = Splay.Splay&lt;Int&gt;(Int.compare);
+t.fromArray([3,5,4,2,6,4,1,9,7,8]);
+for (x in arr.vals()) {
+   assert(t.find(x) == true);
+   t.remove(x);
+   assert(t.find(x) == false);
+   t.insert(x);
+   assert(t.find(x) == true);
+   assert(t.min() == ?1);
+};</code></pre></div></li></ul></div></html>

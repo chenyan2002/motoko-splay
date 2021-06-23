@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html><head title="Doc"><meta charset="UTF-8"/><link href="styles.css" rel="stylesheet"/></head><body><nav class="sidebar"><h3>Modules</h3><ul><li><li><a href="lib.html">lib</a></li></li></ul><h3>Declarations</h3><ul><li><li><a href="#type.Tree">Tree</a></li></li><li><li><a href="#type.Splay">Splay</a></li></li></ul></nav><div class="documentation"><h1>lib</h1><p>Splay tree</p>
+<p>Based on Sam Westrick's SML implementation: https://github.com/shwestrick/pure-splay/blob/master/BottomUpSplay.sml
+Note for using this library in IC: Since lookup changes the shape of the splay tree, we cannot use query calls
+for anything that touches the splay tree.</p>
+<pre class="motoko"><code class="motoko">import Splay &quot;mo:splay&quot;;
+
+let t = Splay.Splay&lt;Int&gt;(Int.compare);
+t.fromArray([3,5,4,2,6,4,1,9,7,8]);
+for (x in arr.vals()) {
+   assert(t.find(x) == true);
+   t.remove(x);
+   assert(t.find(x) == false);
+   t.insert(x);
+   assert(t.find(x) == true);
+   assert(t.min() == ?1);
+};</code></pre><div class="declaration"><h4 class="type-declaration" id="type.Tree"><span class="keyword">type </span><span class="type">Tree</span>&lt;<span class="type">X</span>&gt; = {#node : (<a href="#type.Tree"><span class="type">Tree</span></a>&lt;<span class="type">X</span>&gt;, <span class="type">X</span>, <a href="#type.Tree"><span class="type">Tree</span></a>&lt;<span class="type">X</span>&gt;); #empty}</h4><p></p></div><div class="declaration"><h4 class="class-declaration" id="type.Splay"><span class="keyword">class </span><span class="classname">Splay</span>&lt;<span class="type">X</span>&gt;(<span class="parameter">compareTo</span> : (<span class="type">X</span>, <span class="type">X</span>) -&gt; <span class="type">O.Order</span>)</h4><div class="declaration"><h4 class="function" id="Splay.insert"><code><span class="keyword">public func </span><span class="fnname">insert</span>(<span class="parameter">k</span> : <span class="type">X</span>)</code></h4><p></p></div><div class="declaration"><h4 class="function" id="Splay.find"><code><span class="keyword">public func </span><span class="fnname">find</span>(<span class="parameter">k</span> : <span class="type">X</span>) : <span class="type">Bool</span></code></h4><p></p></div><div class="declaration"><h4 class="function" id="Splay.remove"><code><span class="keyword">public func </span><span class="fnname">remove</span>(<span class="parameter">k</span> : <span class="type">X</span>)</code></h4><p></p></div><div class="declaration"><h4 class="function" id="Splay.min"><code><span class="keyword">public func </span><span class="fnname">min</span>() : ?<span class="type">X</span></code></h4><p></p></div><div class="declaration"><h4 class="function" id="Splay.fromArray"><code><span class="keyword">public func </span><span class="fnname">fromArray</span>(<span class="parameter">arr</span> : [<span class="type">X</span>])</code></h4><p></p></div><div class="declaration"><h4 class="function" id="Splay.entries"><code><span class="keyword">public func </span><span class="fnname">entries</span>() : <span class="type">I.Iter</span>&lt;<span class="type">X</span>&gt;</code></h4><p></p></div><p></p></div></div></body></html>
